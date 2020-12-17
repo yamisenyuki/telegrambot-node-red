@@ -1,0 +1,78 @@
+<script type="text/javascript">
+    RED.nodes.registerType('TextMessage',{
+        category: 'Telegram',
+        color: '#0088cc',
+        defaults: {
+            name: {value:""}
+        },
+        inputs:0,
+        outputs:1,
+        icon: "bridge.svg",
+        label: function() {
+            return this.name||"TextMessage";
+        }
+    });
+    RED.nodes.registerType('StartMessage',{
+        category: 'Telegram',
+        color: '#0088cc',
+        defaults: {
+            name: {value:""}
+        },
+        inputs:0,
+        outputs:1,
+        icon: "bridge.svg",
+        label: function() {
+            return this.name||"StartMessage";
+        }
+    });
+    RED.nodes.registerType('SendTextMessage',{
+        category: 'Telegram',
+        color: '#0088cc',
+        defaults: {
+            name: {value:""}
+        },
+        inputs:1,
+        outputs:0,
+        icon: "bridge.svg",
+        label: function() {
+            return this.name||"SendTextMessage";
+        }
+    });
+    RED.nodes.registerType('CommandMessage',{
+        category: 'Telegram',
+        color: '#0088cc',
+        defaults: {
+            name: {value:""}
+        },
+        inputs:0,
+        outputs:1,
+        icon: "bridge.svg",
+        label: function() {
+            return this.name||"CommandMessage";
+        }
+    });
+    RED.nodes.registerType('InlineMessage',{
+        category: 'Telegram',
+        color: '#0088cc',
+        defaults: {
+            name: {value:""}
+        },
+        inputs:0,
+        outputs:1,
+        icon: "bridge.svg",
+        label: function() {
+            return this.name||"InlineMessage";
+        }
+    });
+</script>
+<!-- 
+<script type="text/html" data-template-name="StartMessage">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="StartMessage">
+    <p>A simple node that converts the message payloads into all lower-case characters</p>
+</script> -->

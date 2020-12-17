@@ -1,0 +1,18 @@
+{
+  "name": "telegrambot-node-red",
+  "version": "0.0.1",
+  "main": "TelegramBotNode.js",
+  "author": "yamisenyuki",
+  "license": "mit",
+  "scripts": {
+    "build": "bash package.sh"
+  },
+  "node-red": {
+    "nodes": {
+      "telegram": "TelegramBotNode.js"
+    }
+  },
+  "dependencies": {
+    "telegraf": "^3.38.0"
+  }
+}
