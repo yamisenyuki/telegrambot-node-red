@@ -18,15 +18,15 @@ module.exports = function (RED) {
         let node = this;
         bot.on('text', (ctx, next) => {
             let msg = {}
-            msg.payload = {}
-            msg.payload.message = ctx.message
-            msg.payload.chat = ctx.chat
-            msg.payload.from = ctx.from
-            msg.payload.inlineQuery = ctx.inlineQuery
-            msg.payload.chosenInlineResult = ctx.chosenInlineResult
-            msg.payload.shippingQuery = ctx.shippingQuery
-            msg.payload.updateType = ctx.updateType
-            msg.payload.updateSubTypes = ctx.updateSubTypes
+            msg.tgpayload = {}
+            msg.tgpayload.message = ctx.message
+            msg.tgpayload.chat = ctx.chat
+            msg.tgpayload.from = ctx.from
+            msg.tgpayload.inlineQuery = ctx.inlineQuery
+            msg.tgpayload.chosenInlineResult = ctx.chosenInlineResult
+            msg.tgpayload.shippingQuery = ctx.shippingQuery
+            msg.tgpayload.updateType = ctx.updateType
+            msg.tgpayload.updateSubTypes = ctx.updateSubTypes
             node.send(msg)
             next()
         })
@@ -38,15 +38,15 @@ module.exports = function (RED) {
         bot.on('text', (ctx, next) => {
             if (ctx.message.text === "/start") {
                 let msg = {}
-                msg.payload = {}
-                msg.payload.message = ctx.message
-                msg.payload.chat = ctx.chat
-                msg.payload.from = ctx.from
-                msg.payload.inlineQuery = ctx.inlineQuery
-                msg.payload.chosenInlineResult = ctx.chosenInlineResult
-                msg.payload.shippingQuery = ctx.shippingQuery
-                msg.payload.updateType = ctx.updateType
-                msg.payload.updateSubTypes = ctx.updateSubTypes
+                msg.tgpayload = {}
+                msg.tgpayload.message = ctx.message
+                msg.tgpayload.chat = ctx.chat
+                msg.tgpayload.from = ctx.from
+                msg.tgpayload.inlineQuery = ctx.inlineQuery
+                msg.tgpayload.chosenInlineResult = ctx.chosenInlineResult
+                msg.tgpayload.shippingQuery = ctx.shippingQuery
+                msg.tgpayload.updateType = ctx.updateType
+                msg.tgpayload.updateSubTypes = ctx.updateSubTypes
                 node.send(msg)
             }
             next()
@@ -62,10 +62,10 @@ module.exports = function (RED) {
         node.on('input', function (msg, send, done) {
             try {
                 node.log(msg)
-                if (msg.reply === undefined) msg.reply = msg.payload.message.text
+                if (msg.reply === undefined) msg.reply = msg.tgpayload.message.text
                 node.log(msg.reply)
-                node.log(msg.payload.chat.id)
-                rep.sendMessage(msg.payload.chat.id, msg.reply)
+                node.log(msg.tgpayload.chat.id)
+                rep.sendMessage(msg.tgpayload.chat.id, msg.reply)
                 done()
             } catch (error) {
                 done(error)
@@ -80,16 +80,16 @@ module.exports = function (RED) {
         bot.on('text', (ctx, next) => {
             if (ctx.message.text[0] === '/') {
                 let msg = {}
-                msg.payload = {}
-                msg.payload.message = ctx.message
-                msg.payload.chat = ctx.chat
-                msg.payload.from = ctx.from
-                msg.payload.inlineQuery = ctx.inlineQuery
-                msg.payload.chosenInlineResult = ctx.chosenInlineResult
-                msg.payload.shippingQuery = ctx.shippingQuery
-                msg.payload.updateType = ctx.updateType
-                msg.payload.updateSubTypes = ctx.updateSubTypes
-                msg.payload.command = ctx.message.text.substring(1)
+                msg.tgpayload = {}
+                msg.tgpayload.message = ctx.message
+                msg.tgpayload.chat = ctx.chat
+                msg.tgpayload.from = ctx.from
+                msg.tgpayload.inlineQuery = ctx.inlineQuery
+                msg.tgpayload.chosenInlineResult = ctx.chosenInlineResult
+                msg.tgpayload.shippingQuery = ctx.shippingQuery
+                msg.tgpayload.updateType = ctx.updateType
+                msg.tgpayload.updateSubTypes = ctx.updateSubTypes
+                msg.tgpayload.command = ctx.message.text.substring(1)
                 node.send(msg)
             }
             next()
@@ -103,15 +103,15 @@ module.exports = function (RED) {
         let node = this;
         bot.inlineQuery(/.*/, (ctx, next) => {
             let msg = {}
-            msg.payload = {}
-            msg.payload.message = ctx.message
-            msg.payload.chat = ctx.chat
-            msg.payload.from = ctx.from
-            msg.payload.inlineQuery = ctx.inlineQuery
-            msg.payload.chosenInlineResult = ctx.chosenInlineResult
-            msg.payload.shippingQuery = ctx.shippingQuery
-            msg.payload.updateType = ctx.updateType
-            msg.payload.updateSubTypes = ctx.updateSubTypes
+            msg.tgpayload = {}
+            msg.tgpayload.message = ctx.message
+            msg.tgpayload.chat = ctx.chat
+            msg.tgpayload.from = ctx.from
+            msg.tgpayload.inlineQuery = ctx.inlineQuery
+            msg.tgpayload.chosenInlineResult = ctx.chosenInlineResult
+            msg.tgpayload.shippingQuery = ctx.shippingQuery
+            msg.tgpayload.updateType = ctx.updateType
+            msg.tgpayload.updateSubTypes = ctx.updateSubTypes
             node.send(msg)
             next()
             // rep.sendMessage((ctx.message.chat.id), '323')

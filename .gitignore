@@ -106,3 +106,4 @@ test.*
 package.sh
 config.js
 .DS_Store
+.devcontainer
