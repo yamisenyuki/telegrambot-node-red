@@ -2,8 +2,11 @@
 const Telegraf = require('telegraf')
 const Config = require("./config")
 const Telegram = require('telegraf/telegram')
+const crypto = require('crypto')
 const bot = new Telegraf(Config.Bot.token)
 const rep = new Telegram(Config.Bot.token)
+const extra = require('telegraf/extra')
+const markup = extra.HTML()
 
 bot.use(async (ctx, next) => {
     const start = new Date()
@@ -65,7 +68,7 @@ module.exports = function (RED) {
                 if (msg.reply === undefined) msg.reply = msg.tgpayload.message.text
                 node.log(msg.reply)
                 node.log(msg.tgpayload.chat.id)
-                rep.sendMessage(msg.tgpayload.chat.id, msg.reply)
+                rep.sendMessage(msg.tgpayload.chat.id, msg.reply, markup)
                 done()
             } catch (error) {
                 done(error)
@@ -112,6 +115,7 @@ module.exports = function (RED) {
             msg.tgpayload.shippingQuery = ctx.shippingQuery
             msg.tgpayload.updateType = ctx.updateType
             msg.tgpayload.updateSubTypes = ctx.updateSubTypes
+            msg.tgpayload.query=ctx.inlineQuery.query
             node.send(msg)
             next()
             // rep.sendMessage((ctx.message.chat.id), '323')
@@ -119,9 +123,56 @@ module.exports = function (RED) {
             // this.log(222)
         })
     }
+    function TelegramAnswerInlineMessage(config) {
+        RED.nodes.createNode(this, config);
+        let node = this;
+        node.on('input', function (msg, send, done) {
+            try {
+                node.log(msg)
+                node.log(msg.reply)
+                node.log(msg.tgpayload.inlineQuery.id)
+                rep.answerInlineQuery(msg.tgpayload.inlineQuery.id, msg.reply)
+                done()
+            } catch (error) {
+                done(error)
+                node.error(error)
+            }
+        })
+    }
+    function InlineQueryResultArticle(config) {
+        RED.nodes.createNode(this, config);
+        let node = this;
+        node.on('input', function (msg, send, done) {
+            try {
+                msg.reply = []
+                for (i of msg.payload) {
+                    msg.reply.push({
+                        type: 'article',
+                        id: '0',
+                        title: i.name,
+                        description: i.desc,
+                        input_message_content: {
+                            message_text: i.name
+                        }
+                    })
+                }
+                for (i = 0; i < msg.reply.length; i++) {
+                    msg.reply[i].id = crypto.createHash('sha256').update(JSON.stringify(msg.reply[i]) + Math.random()).digest('hex')
+                }
+                console.log(msg.reply)
+                node.send(msg)
+                // done()
+            } catch (error) {
+                done(error)
+                node.error(error)
+            }
+        })
+    }
     RED.nodes.registerType("TextMessage", TelegramTextMessage);
     RED.nodes.registerType("StartMessage", TelegramStartMessage);
     RED.nodes.registerType("SendTextMessage", TelegramSendTextMessage);
     RED.nodes.registerType("CommandMessage", TelegramCommandMessage);
     RED.nodes.registerType("InlineMessage", TelegramInlineMessage);
+    RED.nodes.registerType("AnswerInlineMessage", TelegramAnswerInlineMessage);
+    RED.nodes.registerType("InlineQueryResultArticle", InlineQueryResultArticle);
 }
